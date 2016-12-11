@@ -32,6 +32,10 @@
 <a id="imaskjs" class="anchor" href="#imaskjs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>imaskjs</h1>
 
 <p>vanilla JS input mask</p>
+
+<input id="phone" type="text" value="">
+<input id="custommask" type="text" value="">
+
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/uNmAnNeR">uNmAnNeR</a></p>
@@ -39,6 +43,21 @@
       </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
-    
+    <script src="dist/imask.js"></script>
+    <script type="text/javascript">
+        var phoneMask = new IMask(document.getElementById('phone'), {
+            mask: '+{7}(000)000-00-00'
+        });
+        phoneMask.on('accept', function() {
+            console.log('accept', phoneMask.rawValue, phoneMask.unmaskedValue);
+        });
+        phoneMask.on('complete', function() {
+            console.log('complete', phoneMask.rawValue, phoneMask.unmaskedValue);
+        });
+
+        new IMask(document.getElementById('custommask'), {
+            mask: '000aaaXXX***'
+        });
+    </script>
   </body>
 </html>
