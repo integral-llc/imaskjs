@@ -1,0 +1,48 @@
+body {
+	display: flex;
+}
+
+@media only screen and (max-width : 400px),
+only screen and (max-device-width : 400px) {
+	body {
+		flex-wrap: wrap;
+	}
+}
+
+aside {
+	margin-right: 20px;
+}
+
+.download-links {
+
+}
+
+.example__content {
+	margin-bottom: 20px;
+	display: flex;
+	align-items: center;
+}
+
+.example > * {
+	margin-right: 20px;
+}
+
+.example__body {
+	display: inline-block;
+}
+
+.example__label {
+	font-weight: bold;
+}
+
+.example__complete {
+	display: none;
+}
+
+.example__complete::after {
+	content: 'complete!';
+}
+
+.example p {
+	margin: 0;
+}

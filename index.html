@@ -5,59 +5,139 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Imaskjs by uNmAnNeR</title>
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="gh-pages/css/main.css">
     <meta name="viewport" content="width=device-width">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
   </head>
   <body>
-    <div class="wrapper">
+    <aside>
+      <ul class="download-links">
+        <li><a href="https://github.com/uNmAnNeR/imaskjs/zipball/master">Download <strong>ZIP File</strong></a></li>
+        <li><a href="https://github.com/uNmAnNeR/imaskjs/tarball/master">Download <strong>TAR Ball</strong></a></li>
+        <li><a href="https://github.com/uNmAnNeR/imaskjs">View On <strong>GitHub</strong></a></li>
+      </ul>
+      <ul>
+        <li><a href="#Example1">Example1</a></li>
+        <li><a href="#Example2">Example2</a></li>
+        <li><a href="#Example3">Example3</a></li>
+        <li><a href="#Example4">Example4</a></li>
+      </ul>
+    </aside>
+    <main>
       <header>
         <h1>Imaskjs</h1>
         <p>vanilla JS input mask</p>
 
-        <p class="view"><a href="https://github.com/uNmAnNeR/imaskjs">View the Project on GitHub <small>uNmAnNeR/imaskjs</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/uNmAnNeR/imaskjs/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/uNmAnNeR/imaskjs/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/uNmAnNeR/imaskjs">View On <strong>GitHub</strong></a></li>
-        </ul>
+        <p class="view"><a href="https://github.com/uNmAnNeR/imaskjs">View on GitHub</a></p>
       </header>
       <section>
-        <h1>
-<a id="imaskjs" class="anchor" href="#imaskjs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>imaskjs</h1>
+        <div class="example example-phone">
+          <label class="example__label">Phone number</label>
+          <div class="example__content">
+            <div class="example__body">
+              <p>+{7}(000)000-00-00</p>
+              <input id="phone-mask" type="text" value="">
+            </div>
+            <div class="example__results">
+              <p>Unmasked value</p>
+              <p id="phone-unmasked"></p>
+              <p id="phone-complete" class="example__complete"></p>
+            </div>
+          </div>
+        </div>
 
-<p>vanilla JS input mask</p>
-
-<input id="phone" type="text" value="">
-<input id="custommask" type="text" value="">
+        <div class="example example-custom">
+          <label class="example__label">Custom mask</label>
+          <div class="example__options">
+            <div>
+              <p>Mask</p>
+              <input type="text" name="mask" value="000aaaXXX***">
+            </div>
+            <div>
+              <p>Placeholder mode</p>
+              <select name="ph-show">
+                <option value="always">always</option>
+                <option value="inside" selected>inside</option>
+              </select>
+            </div>
+            <div>
+              <p>Placeholder char</p>
+              <input type="text" maxlength="1" name="ph-char" value="_">
+            </div>
+            <div>
+              <p>Set raw value</p>
+              <input type="text" name="raw" value="">
+            </div>
+            <div>
+              <p>Set unmasked value</p>
+              <input type="text" name="unmasked" value="">
+            </div>
+            <button name="apply">Apply</button>
+          </div>
+          <div class="example__content">
+            <div class="example__body">
+              <input id="custom-mask" type="text" value="">
+            </div>
+            <div class="example__results">
+              <p>Unmasked value</p>
+              <p id="custom-unmasked"></p>
+              <p id="custom-complete" class="example__complete"></p>
+            </div>
+          </div>
+        </div>
 
       </section>
       <footer>
-        <p>This project is maintained by <a href="https://github.com/uNmAnNeR">uNmAnNeR</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+        <p>Maintained by <a href="https://github.com/uNmAnNeR">uNmAnNeR</a></p>
       </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
+    </main>
     <script src="dist/imask.js"></script>
     <script type="text/javascript">
-        var phoneMask = new IMask(document.getElementById('phone'), {
-            mask: '+{7}(000)000-00-00'
-        });
-        phoneMask.on('accept', function() {
-            console.log('accept', phoneMask.rawValue, phoneMask.unmaskedValue);
-        });
-        phoneMask.on('complete', function() {
-            console.log('complete', phoneMask.rawValue, phoneMask.unmaskedValue);
-        });
+      var phoneMask = new IMask(document.getElementById('phone-mask'), {
+        mask: '+{7}(000)000-00-00'
+      });
+      phoneMask.on('accept', function() {
+        document.getElementById('phone-complete').style.display = '';
+        document.getElementById('phone-unmasked').innerHTML = phoneMask.unmaskedValue;
+      });
+      phoneMask.on('complete', function() {
+        document.getElementById('phone-complete').style.display = 'block';
+      });
 
-        new IMask(document.getElementById('custommask'), {
-            mask: '000aaaXXX***'
-        });
+
+      var customMask = new IMask(document.getElementById('custom-mask'), {
+          mask: '000aaaXXX***'
+      });
+      customMask.on('accept', function() {
+        document.getElementById('custom-complete').style.display = '';
+        document.getElementById('custom-unmasked').innerHTML = customMask.unmaskedValue;
+      });
+      customMask.on('complete', function() {
+        document.getElementById('custom-complete').style.display = 'block';
+      });
+
+      var customEl = document.getElementsByClassName('example-custom')[0];
+      customEl.querySelector('[name=apply]').addEventListener('click', function (e) {
+        var mask = customEl.querySelector('[name=mask]').value;
+        var ph = {
+          show: customEl.querySelector('[name=ph-show]').value,
+          char: customEl.querySelector('[name=ph-char]').value || '_'
+        };
+        var rawValue = customEl.querySelector('[name=raw]').value;
+        customEl.querySelector('[name=raw]').value = '';
+
+        var unmaskedValue = customEl.querySelector('[name=unmasked]').value;
+        customEl.querySelector('[name=unmasked]').value = '';
+
+        customMask.mask = mask;
+        customMask.placeholder = ph;
+        customMask.rawValue = rawValue;
+        if (!rawValue) customMask.unmaskedValue = unmaskedValue;
+      });
+
     </script>
   </body>
 </html>
