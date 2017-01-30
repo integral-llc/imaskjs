@@ -2,7 +2,6 @@ import {conform} from '../utils';
 
 // TODO
 // - empty placeholder
-// - !progressive
 // - validateOnly
 // - add comments
 
@@ -14,15 +13,16 @@ class BaseMask {
     this.mask = opts.mask;
 
     this._listeners = {};
+    this._refreshingCount = 0;
   }
 
   bindEvents () {
-    this.el.addEventListener('keydown', this.saveCursor.bind(this));
+    this.el.addEventListener('keydown', this.saveState.bind(this));
     this.el.addEventListener('input', this.processInput.bind(this));
     this.el.addEventListener('drop', this._onDrop.bind(this));
   }
 
-  saveCursor (ev) {
+  saveState (ev) {
     this._oldValue = this.el.value;
     this._oldSelection = {
       start: this.el.selectionStart,
@@ -53,13 +53,10 @@ class BaseMask {
     res = conform(this.resolve(res, details),
       res,
       this._oldValue);
+
     if (res !== inputValue) {
       this.el.value = res;
-      cursorPos = res === this._oldValue ?
-        // if value not changed - use old cursor pos
-        this._oldSelection.end :
-        // else set new
-        details.cursorPos;
+      cursorPos = details.cursorPos;
     }
     this.el.selectionStart = this.el.selectionEnd = cursorPos;
 
@@ -95,6 +92,24 @@ class BaseMask {
   }
 
   set rawValue (str) {
+    this.startRefresh();
+    this.el.value = str;
+    this.endRefresh();
+  }
+
+  get unmaskedValue () {
+    return this.el.value;
+  }
+
+  set unmaskedValue (value) {
+    this.startRefresh();
+    this.el.value = value;
+    this.endRefresh();
+  }
+
+  refresh () {
+    if (this._refreshingCount) return;
+    var str = this.el.value;
     var details = {
       startChangePos: 0,
       oldSelection: {
@@ -108,12 +123,13 @@ class BaseMask {
     this.el.value = conform(this.resolve(str, details), this.el.value);
   }
 
-  get unmaskedValue () {
-    return this.el.value;
+  startRefresh () {
+    ++this._refreshingCount;
   }
 
-  set unmaskedValue (value) {
-    this.el.value = value;
+  endRefresh () {
+    --this._refreshingCount;
+    if (!this._refreshingCount) this.refresh();
   }
 
   _onDrop (ev) {
