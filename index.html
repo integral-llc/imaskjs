@@ -134,8 +134,8 @@
 
         customMask.mask = mask;
         customMask.placeholder = ph;
-        customMask.rawValue = rawValue;
-        if (!rawValue) customMask.unmaskedValue = unmaskedValue;
+        if (rawValue) customMask.rawValue = rawValue;
+        if (unmaskedValue) customMask.unmaskedValue = unmaskedValue;
       });
 
     </script>
