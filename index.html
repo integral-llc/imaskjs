@@ -4,8 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Imaskjs by uNmAnNeR</title>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/kube/6.5.2/css/kube.min.css">
     <link rel="stylesheet" href="gh-pages/css/main.css">
     <meta name="viewport" content="width=device-width">
     <!--[if lt IE 9]>
@@ -13,82 +12,96 @@
     <![endif]-->
   </head>
   <body>
-    <aside>
+    <nav>
+      <ul class="menu">
+        <li><a href="#getting-started">Getting started</a></li>
+        <li><a href="#demo">Demo</a></li>
+        <li><a href="#options">Options</a></li>
+        <li><a href="#examples">Examples</a></li>
+      </ul>
       <ul class="download-links">
-        <li><a href="https://github.com/uNmAnNeR/imaskjs/zipball/master">Download <strong>ZIP File</strong></a></li>
-        <li><a href="https://github.com/uNmAnNeR/imaskjs/tarball/master">Download <strong>TAR Ball</strong></a></li>
-        <li><a href="https://github.com/uNmAnNeR/imaskjs">View On <strong>GitHub</strong></a></li>
+        <li><a href="https://github.com/uNmAnNeR/imaskjs/zipball/master">ZIP</a></li>
+        <li><a href="https://github.com/uNmAnNeR/imaskjs/tarball/master">TAR</a></li>
+        <li><a href="https://github.com/uNmAnNeR/imaskjs" class="gh-link"></a></li>
       </ul>
-      <ul>
-        <li><a href="#Example1">Example1</a></li>
-        <li><a href="#Example2">Example2</a></li>
-        <li><a href="#Example3">Example3</a></li>
-        <li><a href="#Example4">Example4</a></li>
-      </ul>
-    </aside>
+    </nav>
     <main>
       <header>
-        <h1>Imaskjs</h1>
-        <p>vanilla JS input mask</p>
-
-        <p class="view"><a href="https://github.com/uNmAnNeR/imaskjs">View on GitHub</a></p>
+        <h1 class="title">Imaskjs</h1>
+        <em>vanilla JS input mask</em>
       </header>
       <section>
-        <div class="example example-phone">
-          <label class="example__label">Phone number</label>
-          <div class="example__content">
-            <div class="example__body">
-              <p>+{7}(000)000-00-00</p>
-              <input id="phone-mask" type="text" value="">
-            </div>
-            <div class="example__results">
-              <p>Unmasked value</p>
-              <p id="phone-unmasked"></p>
-              <p id="phone-complete" class="example__complete"></p>
-            </div>
+        <h2 id="getting-started" class="section-h"><a href="#getting-started">Getting started</a></h3>
+        TODO
+        <h2 id="demo" class="section-h"><a href="#demo">Demo</a></h3>
+        <h3 id="phone-mask-ex" class="section-h"><a href="#phone-mask-ex">Phone number</a></h3>
+        <form class="form example-phone">
+          <div class="form-item">
+            <label>Type here against mask <span class="desc">+{7}(000)000-00-00</span></label>
+            <input id="phone-mask" type="text" value="">
+            <div class="desc">unmasked: <span id="phone-unmasked"></span><span id="phone-complete" class="example__complete"></span></div>
           </div>
-        </div>
+        </form>
 
-        <div class="example example-custom">
-          <label class="example__label">Custom mask</label>
-          <div class="example__options">
-            <div>
-              <p>Mask</p>
-              <input type="text" name="mask" value="000aaaXXX***">
-            </div>
-            <div>
-              <p>Placeholder mode</p>
-              <select name="ph-show">
-                <option value="always">always</option>
-                <option value="inside" selected>inside</option>
-              </select>
-            </div>
-            <div>
-              <p>Placeholder char</p>
-              <input type="text" maxlength="1" name="ph-char" value="_">
-            </div>
-            <div>
-              <p>Set raw value</p>
-              <input type="text" name="raw" value="">
-            </div>
-            <div>
-              <p>Set unmasked value</p>
-              <input type="text" name="unmasked" value="">
-            </div>
-            <button name="apply">Apply</button>
+        <h3 id="custom-mask-ex" class="section-h"><a href="#custom-mask-ex">Custom mask</a></h3>
+        <form class="form example-custom">
+          <div class="form-item">
+            <label>Type here</label>
+            <input id="custom-mask" type="text" value="">
+            <div class="desc">unmasked: <span id="custom-unmasked"></span><span id="custom-complete" class="example__complete"></span></div>
           </div>
-          <div class="example__content">
-            <div class="example__body">
-              <input id="custom-mask" type="text" value="">
+          <fieldset>
+            <legend>Options</legend>
+            <div class="row gutters">
+              <div class="col col-4">
+                <div class="form-item">
+                  <label>Mask</label>
+                  <input type="text" name="mask" value="000aaaXXX***">
+                </div>
+              </div>
+              <div class="col col-4">
+                <div class="form-item">
+                  <label>Placeholder mode</label>
+                  <select name="ph-show">
+                    <option value="always" selected>always</option>
+                    <option value="inside">inside</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col col-4">
+                <div class="form-item">
+                  <label>Placeholder char</label>
+                  <input type="text" maxlength="1" name="ph-char" value="_">
+                </div>
+              </div>
             </div>
-            <div class="example__results">
-              <p>Unmasked value</p>
-              <p id="custom-unmasked"></p>
-              <p id="custom-complete" class="example__complete"></p>
+          </fieldset>
+          <fieldset>
+            <legend>Values</legend>
+             <div class="row gutters align-middle">
+              <div class="col col-4">
+                <div class="form-item">
+                  <label>Set raw value</label>
+                  <input type="text" name="raw" value="">
+                </div>
+              </div>
+              <span class="desc">&nbsp;or&nbsp;</span>
+              <div class="col col-4">
+                <div class="form-item">
+                  <label>Set unmasked value</label>
+                  <input type="text" name="unmasked" value="">
+                </div>
+              </div>
             </div>
+          </fieldset>
+          <div class="form-item">
+            <button name="apply" type="button">Apply</button>
           </div>
-        </div>
-
+        </form>
+        <h2 id="options" class="section-h"><a href="#options">Options</a></h3>
+        TODO
+        <h2 id="examples" class="section-h"><a href="#examples">Examples</a></h3>
+        TODO
       </section>
       <footer>
         <p>Maintained by <a href="https://github.com/uNmAnNeR">uNmAnNeR</a></p>
@@ -104,19 +117,22 @@
         document.getElementById('phone-unmasked').innerHTML = phoneMask.unmaskedValue;
       });
       phoneMask.on('complete', function() {
-        document.getElementById('phone-complete').style.display = 'block';
+        document.getElementById('phone-complete').style.display = 'inline-block';
       });
 
 
       var customMask = new IMask(document.getElementById('custom-mask'), {
-          mask: '000aaaXXX***'
+          mask: '000aaaXXX***',
+          placeholder: {
+            show: 'always'
+          }
       });
       customMask.on('accept', function() {
         document.getElementById('custom-complete').style.display = '';
         document.getElementById('custom-unmasked').innerHTML = customMask.unmaskedValue;
       });
       customMask.on('complete', function() {
-        document.getElementById('custom-complete').style.display = 'block';
+        document.getElementById('custom-complete').style.display = 'inline-block';
       });
 
       var customEl = document.getElementsByClassName('example-custom')[0];

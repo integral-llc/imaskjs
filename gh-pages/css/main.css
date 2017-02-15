@@ -1,48 +1,72 @@
-body {
-	display: flex;
+.gh-link {
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  background-image: url(../i/GitHub-Mark-32px.png);
 }
 
-@media only screen and (max-width : 400px),
-only screen and (max-device-width : 400px) {
-	body {
-		flex-wrap: wrap;
-	}
+a:hover {
+  transition: all linear 0.2s;
+  color: #000;
+  text-decoration: underline;
 }
 
-aside {
-	margin-right: 20px;
+nav {
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  background-color: white;
 }
 
+nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+}
+
+nav .menu li {
+  margin-right: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .download-links {
-
+  width: 50px;
+  margin-left: auto;
+  justify-content: center;
+}
+.download-links li {
+  margin-right: 10px;
 }
 
-.example__content {
-	margin-bottom: 20px;
-	display: flex;
-	align-items: center;
+nav li a {
+  text-decoration: none;
 }
 
-.example > * {
-	margin-right: 20px;
+body {
+  padding: 0 20px;
 }
 
-.example__body {
-	display: inline-block;
+.section-h a {
+  text-decoration: none;
 }
 
-.example__label {
-	font-weight: bold;
+.section-h:after {
+  content: '#';
+  font-size: 15px;
+  font-weight: normal;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.3);
+  margin-left: 8px;
 }
 
 .example__complete {
-	display: none;
+  display: none;
+  margin-left: 5px;
 }
 
 .example__complete::after {
-	content: 'complete!';
-}
-
-.example p {
-	margin: 0;
+  content: '✔';
 }
