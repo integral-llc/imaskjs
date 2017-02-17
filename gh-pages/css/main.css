@@ -7,7 +7,6 @@
 
 a:hover {
   transition: all linear 0.2s;
-  color: #000;
   text-decoration: underline;
 }
 
@@ -48,6 +47,10 @@ nav .menu li {
 
 nav li a {
   text-decoration: none;
+}
+
+nav li a:hover {
+  color: #000;
 }
 
 body {

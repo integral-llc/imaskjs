@@ -15,8 +15,8 @@
     <nav>
       <ul class="menu">
         <li><a href="#getting-started">Getting started</a></li>
-        <li><a href="#demo">Demo</a></li>
         <li><a href="#options">Options</a></li>
+        <li><a href="#demo">Demo</a></li>
         <li><a href="#examples">Examples</a></li>
       </ul>
       <ul class="download-links">
@@ -31,9 +31,24 @@
         <em>vanilla JS input mask</em>
       </header>
       <section>
-        <h2 id="getting-started" class="section-h"><a href="#getting-started">Getting started</a></h3>
+        <h2 id="features" class="section-h"><a href="#features">Features</a></h2>
+        <ul>
+          <li>simple get/set raw and unmasked values</li>
+          <li>no external dependencies</li>
+          <li>visible, inside only, hidden placeholder modes</li>
+          <li>optional parts</li>
+          <li>IE11+ support <span class="req">*<a href="#TODO">support older</a></span></li>
+        </ul>
+        TODO:
+        <ul>
+          <li>jQuery integration</li>
+          <li>composite mask (for date, datetime etc.)</li>
+          <li>unit tests</li>
+          <li>?RTL</li>
+        </ul>
+        <h2 id="getting-started" class="section-h"><a href="#getting-started">Getting started</a></h2>
         TODO
-        <h2 id="demo" class="section-h"><a href="#demo">Demo</a></h3>
+        <h2 id="demo" class="section-h"><a href="#demo">Demo</a></h2>
         <h3 id="phone-mask-ex" class="section-h"><a href="#phone-mask-ex">Phone number</a></h3>
         <form class="form example-phone">
           <div class="form-item">
@@ -56,7 +71,7 @@
               <div class="col col-4">
                 <div class="form-item">
                   <label>Mask</label>
-                  <input type="text" name="mask" value="000aaaXXX***">
+                  <input type="text" name="mask" value="000[aaa]XXX***">
                 </div>
               </div>
               <div class="col col-4">
@@ -65,6 +80,7 @@
                   <select name="ph-show">
                     <option value="always" selected>always</option>
                     <option value="inside">inside</option>
+                    <option value="hidden">hidden</option>
                   </select>
                 </div>
               </div>
@@ -98,9 +114,9 @@
             <button name="apply" type="button">Apply</button>
           </div>
         </form>
-        <h2 id="options" class="section-h"><a href="#options">Options</a></h3>
+        <h2 id="options" class="section-h"><a href="#options">Options</a></h2>
         TODO
-        <h2 id="examples" class="section-h"><a href="#examples">Examples</a></h3>
+        <h2 id="examples" class="section-h"><a href="#examples">Examples</a></h2>
         TODO
       </section>
       <footer>
@@ -122,7 +138,7 @@
 
 
       var customMask = new IMask(document.getElementById('custom-mask'), {
-          mask: '000aaaXXX***',
+          mask: '000[aaa]XXX***',
           placeholder: {
             show: 'always'
           }
