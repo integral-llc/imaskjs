@@ -33,9 +33,9 @@
       <section>
         <h2 id="features" class="section-h"><a href="#features">Features</a></h2>
         <ul>
-          <li>simple get/set <em>raw</em> and <em>unmasked</em> values</li>
+          <li>get and set <em>raw</em> and <em>unmasked</em> values easily</li>
           <li>no external dependencies</li>
-          <li>show <em>always</em> and <em>lazy</em> placeholder modes</li>
+          <li>show placeholders in <em>always</em> and <em>lazy</em> modes</li>
           <li>optional input parts</li>
           <li>IE11+ support <span class="req">*<a href="#TODO">support older</a></span></li>
         </ul>
@@ -61,7 +61,7 @@ var mask = new IMask(selector, {
         <h2 id="options" class="section-h"><a href="#options">Options</a></h2>
         <h3 id="options-init" class="section-h"><a href="#options-init">Initialize</a></h3>
         <pre><code>var mask = new IMask(<em>selector</em>, <em>opts</em>)</code></pre>
-        <code>mask</code> option is mandatory and could be one of following types:
+        <code>mask</code> option is mandatory and can be one of following types:
         <dl>
           <dt>RegExp</dt>
           <dd>matches input against mask RegExp</dd>
@@ -81,7 +81,7 @@ var mask = new IMask(selector, {
           <li><code>[]</code> - make input optional</li>
           <li><code>{}</code> - include fixed in unmasked value</li>
           </ul>
-          <p>If definition character should be treated as fixed it should be escaped by <code>\\</code> (For ex. <code>\\0</code>).</p>
+          <p>If definition character should be treated as fixed it should be escaped by <code>\\</code> (E.g. <code>\\0</code>).</p>
 
           <p>Configure with options:</p>
           <pre><code>placeholder: {
@@ -95,7 +95,7 @@ var mask = new IMask(selector, {
 }</code></pre>
           </dd>
         </dl>
-        Mask type used to build a resolver (or use custom resolver in last case).
+        Mask type used to build a resolver (or inherit BaseMask).
         Resolver should define at least one method <code>resolve (<em>input</em>, <em>details</em>) {...}</code>.
         <p id="options-details">Details is an object:</p>
         <pre><code>{
@@ -111,9 +111,9 @@ var mask = new IMask(selector, {
 }</code></pre>
 
         <h3 id="options-callbacks" class="section-h"><a href="#options-callbacks">Callbacks</a></h3>
-        <p><code>accept</code>, <code>complete</code> callbacks are only available with <em>pattern</em> mask type (or could be fired manually with <code>fireEvent (event)</code> method.</p>
+        <p><code>accept</code>, <code>complete</code> callbacks are only available with <em>pattern</em> mask type or can be fired manually with <code>fireEvent (event)</code> method.</p>
         <p>Use <code>on (event, handler)</code> method for subscribe.</p>
-        <p>Use <code>off (event [, handler])</code> for unsibscribe. Calling with no handler argument removes all attached handlers.</p>
+        <p>Use <code>off (event [, handler])</code> for unsibscribe. Calling without handler argument removes all attached handlers.</p>
 
         <h3 id="options-properties" class="section-h"><a href="#options-properties">Properties</a></h3>
         <p>All mask options could be modified in run-time. Any modification applies mask with new options on input value.</p>
