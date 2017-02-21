@@ -16,8 +16,8 @@
       <ul class="menu">
         <li><a href="#getting-started">Getting started</a></li>
         <li><a href="#options">Options</a></li>
-        <li><a href="#demo">Demo</a></li>
         <li><a href="#examples">Examples</a></li>
+        <li><a href="#demo">Demo</a></li>
       </ul>
       <ul class="download-links">
         <li><a href="https://github.com/uNmAnNeR/imaskjs/zipball/master">ZIP</a></li>
@@ -33,10 +33,10 @@
       <section>
         <h2 id="features" class="section-h"><a href="#features">Features</a></h2>
         <ul>
-          <li>simple get/set raw and unmasked values</li>
+          <li>simple get/set <em>raw</em> and <em>unmasked</em> values</li>
           <li>no external dependencies</li>
-          <li>visible, inside only, hidden placeholder modes</li>
-          <li>optional parts</li>
+          <li>show <em>always</em> and <em>lazy</em> placeholder modes</li>
+          <li>optional input parts</li>
           <li>IE11+ support <span class="req">*<a href="#TODO">support older</a></span></li>
         </ul>
         TODO:
@@ -46,10 +46,100 @@
           <li>unit tests</li>
           <li>?RTL</li>
         </ul>
+
         <h2 id="getting-started" class="section-h"><a href="#getting-started">Getting started</a></h2>
-        TODO
+        <p>Include <code>imask.js</code> or <code>imask.min.js</code> from <code>dist</code> folder:</p>
+        <pre><code>&lt;script src=&quot;dist/imask.js&quot;&gt;&lt;/script&gt;</code></pre>
+        <p>Usage:</p>
+        <pre><code>var selector = document.getElementById('selector');
+var mask = new IMask(selector, {
+  mask: '+{7}(000)000-00-00',
+  /* other options */
+}).on('accept', function() { /* ... */ })
+.on('complete', function() { /* ... */ });</code></pre>
+
+        <h2 id="options" class="section-h"><a href="#options">Options</a></h2>
+        <h3 id="options-init" class="section-h"><a href="#options-init">Initialize</a></h3>
+        <pre><code>var mask = new IMask(<em>selector</em>, <em>opts</em>)</code></pre>
+        <code>mask</code> option is mandatory and could be one of following types:
+        <dl>
+          <dt>RegExp</dt>
+          <dd>matches input against mask RegExp</dd>
+          <dt>Function</dt>
+          <dd>process input with mask <code>function (<em>input</em>, <em><a href="#options-details">details</a></em>) {...}</code></dd>
+          <dt>Child of <code>BaseMask</code></dt>
+          <dd>custom mask resolver</dd>
+          <dt>String (Pattern)</dt>
+          <dd>use pattern for complex masks:
+          <pre><code>mask: '000[aaa]/{NIC-}*[**]'</code></pre>
+          where:
+          <ul class="unstyled">
+          <li><code>0</code> - any digit input</li>
+          <li><code>a</code> - any letter input</li>
+          <li><code>*</code> - any char input</li>
+          <li>other chars (not defined in custom options) supposed to be <em>fixed</em></li>
+          <li><code>[]</code> - make input optional</li>
+          <li><code>{}</code> - include fixed in unmasked value</li>
+          </ul>
+          <p>If definition character should be treated as fixed it should be escaped by <code>\\</code> (For ex. <code>\\0</code>).</p>
+
+          <p>Configure with options:</p>
+          <pre><code>placeholder: {
+  show: 'always' | 'lazy'  // defaults to 'lazy'
+  char: &lt;any single char&gt;  // defaults to '_'
+}</code></pre>
+          <pre><code>definitions: {
+  &lt;any single char&gt;: &lt;same type as mask (RegExp, Function, etc.)&gt;
+  ...
+  // defaults are '0', 'a', '*'
+}</code></pre>
+          </dd>
+        </dl>
+        Mask type used to build a resolver (or use custom resolver in last case).
+        Resolver should define at least one method <code>resolve (<em>input</em>, <em>details</em>) {...}</code>.
+        <p id="options-details">Details is an object:</p>
+        <pre><code>{
+  cursorPos: &lt;current cursor position&gt;,
+  startChangePos: &lt;index of the first changed character&gt;,
+  oldSelection: {
+    start: &lt;index of the first previously selected character&gt;,
+    end: &lt;index of the character after the last previously selected character&gt;
+  },
+  removedCount: &lt;removed characters count&gt;,
+  insertedCount: &lt;inserted characters count&gt;,
+  oldValue: &lt;previous user input&gt;
+}</code></pre>
+
+        <h3 id="options-callbacks" class="section-h"><a href="#options-callbacks">Callbacks</a></h3>
+        <p><code>accept</code>, <code>complete</code> callbacks are only available with <em>pattern</em> mask type (or could be fired manually with <code>fireEvent (event)</code> method.</p>
+        <p>Use <code>on (event, handler)</code> method for subscribe.</p>
+        <p>Use <code>off (event [, handler])</code> for unsibscribe. Calling with no handler argument removes all attached handlers.</p>
+
+        <h3 id="options-properties" class="section-h"><a href="#options-properties">Properties</a></h3>
+        <p>All mask options could be modified in run-time. Any modification applies mask with new options on input value.</p>
+        <p>For all mask types following properties available</p>
+        <ul class="unstyled">
+          <li><code>mask</code></li>
+          <li><code>unmaskedValue</code></li>
+          <li><code>rawValue</code></li>
+        </ul>
+        <p>For pattern mask in addition could be used
+        <ul class="unstyled">
+          <li><code>placeholder</code>
+          <li><code>definitions</code></li>
+          <li><code>placeholderLabel<sub>get</sub></code></li>
+          <li><code>isComplete<sub>get</sub></code></li>
+        </ul>
+        <p>Commonly mask automatically reapplies. When needed for manual mask refresh <code>refresh</code> method could be used. For bucket changes enclose them between <code>startRefrest</code>/<code>endRefresh</code> methods.</p>
+
+        <h3 id="options-destroy" class="section-h"><a href="#options-destroy">Destroy</a></h3>
+        <p>Call <code>destroy</code> method.</p>
+
+        <h2 id="examples" class="section-h"><a href="#examples">Examples</a></h2>
+        <p>TODO</p>
+
         <h2 id="demo" class="section-h"><a href="#demo">Demo</a></h2>
-        <h3 id="phone-mask-ex" class="section-h"><a href="#phone-mask-ex">Phone number</a></h3>
+        <h3 id="demo-phone" class="section-h"><a href="#demo-phone">Phone number</a></h3>
         <form class="form example-phone">
           <div class="form-item">
             <label>Type here against mask <span class="desc">+{7}(000)000-00-00</span></label>
@@ -58,7 +148,7 @@
           </div>
         </form>
 
-        <h3 id="custom-mask-ex" class="section-h"><a href="#custom-mask-ex">Custom mask</a></h3>
+        <h3 id="demo-custom" class="section-h"><a href="#demo-custom">Custom mask</a></h3>
         <form class="form example-custom">
           <div class="form-item">
             <label>Type here</label>
@@ -79,8 +169,7 @@
                   <label>Placeholder mode</label>
                   <select name="ph-show">
                     <option value="always" selected>always</option>
-                    <option value="inside">inside</option>
-                    <option value="hidden">hidden</option>
+                    <option value="lazy">lazy</option>
                   </select>
                 </div>
               </div>
@@ -114,10 +203,6 @@
             <button name="apply" type="button">Apply</button>
           </div>
         </form>
-        <h2 id="options" class="section-h"><a href="#options">Options</a></h2>
-        TODO
-        <h2 id="examples" class="section-h"><a href="#examples">Examples</a></h2>
-        TODO
       </section>
       <footer>
         <p>Maintained by <a href="https://github.com/uNmAnNeR">uNmAnNeR</a></p>
@@ -127,12 +212,10 @@
     <script type="text/javascript">
       var phoneMask = new IMask(document.getElementById('phone-mask'), {
         mask: '+{7}(000)000-00-00'
-      });
-      phoneMask.on('accept', function() {
+      }).on('accept', function() {
         document.getElementById('phone-complete').style.display = '';
         document.getElementById('phone-unmasked').innerHTML = phoneMask.unmaskedValue;
-      });
-      phoneMask.on('complete', function() {
+      }).on('complete', function() {
         document.getElementById('phone-complete').style.display = 'inline-block';
       });
 
