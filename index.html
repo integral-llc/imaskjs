@@ -37,7 +37,7 @@
           <li>get and set <em>raw</em> and <em>unmasked</em> values easily</li>
           <li>no external dependencies</li>
           <li>show placeholders in <em>always</em> and <em>lazy</em> modes</li>
-          <li>unmasked value can contains fixed parts</li>
+          <li>unmasked value can contain fixed parts</li>
           <li>optional input parts</li>
           <li>IE11+ support <span class="req">*<a href="#under-the-hood">support older</a></span></li>
         </ul>
@@ -95,7 +95,7 @@ var mask = new IMask(element, {
   ...
   // defaults are '0', 'a', '*'
 }</code></pre>
-          <p><span class="req">*</span>Function signature differs from base mask: <code>function (ch, ci, str)</code>.</p>
+          <p><span class="req">*</span>Function signature differs from base mask: <code>function (char, charIndex, str)</code>.</p>
           </dd>
         </dl>
         Mask type used to build a resolver (or inherit BaseMask).
