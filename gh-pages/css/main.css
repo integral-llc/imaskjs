@@ -5,7 +5,7 @@ header {
 .gh-link {
   width: 32px;
   height: 32px;
-  display: inline-block;
+  display: block;
   background-image: url(../i/GitHub-Mark-32px.png);
 }
 
@@ -24,13 +24,13 @@ nav {
   left: 0;
   width: 100%;
   display: flex;
+  align-items: center;
   background-color: white;
 }
 
 nav ul {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   margin: 0;
 }
 
@@ -42,11 +42,8 @@ nav .menu li {
 }
 .download-links {
   width: 50px;
-  margin-left: auto;
+  margin: 10px 10px 10px auto;
   justify-content: center;
-}
-.download-links li {
-  margin-right: 10px;
 }
 
 a {

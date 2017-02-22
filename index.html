@@ -14,10 +14,11 @@
   <body>
     <nav>
       <ul class="menu">
-        <li><a href="#getting-started">Getting started</a></li>
-        <li><a href="#options">Options</a></li>
+        <li><a href="#getting-started">Getting Started</a></li>
+        <li><a href="#docs">Docs</a></li>
         <li><a href="#examples">Examples</a></li>
         <li><a href="#demo">Demo</a></li>
+        <li><a href="#under-the-hood">Under The Hood</a></li>
       </ul>
       <ul class="download-links">
         <li><a href="https://github.com/uNmAnNeR/imaskjs/zipball/master">ZIP</a></li>
@@ -36,10 +37,11 @@
           <li>get and set <em>raw</em> and <em>unmasked</em> values easily</li>
           <li>no external dependencies</li>
           <li>show placeholders in <em>always</em> and <em>lazy</em> modes</li>
+          <li>unmasked value can contains fixed parts</li>
           <li>optional input parts</li>
-          <li>IE11+ support <span class="req">*<a href="#TODO">support older</a></span></li>
+          <li>IE11+ support <span class="req">*<a href="#under-the-hood">support older</a></span></li>
         </ul>
-        TODO:
+        <p>May coming soon:</p>
         <ul>
           <li>jQuery integration</li>
           <li>composite mask (for date, datetime etc.)</li>
@@ -47,26 +49,26 @@
           <li>?RTL</li>
         </ul>
 
-        <h2 id="getting-started" class="section-h"><a href="#getting-started">Getting started</a></h2>
+        <h2 id="getting-started" class="section-h"><a href="#getting-started">Getting Started</a></h2>
         <p>Include <code>imask.js</code> or <code>imask.min.js</code> from <code>dist</code> folder:</p>
         <pre><code>&lt;script src=&quot;dist/imask.js&quot;&gt;&lt;/script&gt;</code></pre>
         <p>Usage:</p>
-        <pre><code>var selector = document.getElementById('selector');
-var mask = new IMask(selector, {
-  mask: '+{7}(000)000-00-00',
-  /* other options */
-}).on('accept', function() { /* ... */ })
-.on('complete', function() { /* ... */ });</code></pre>
+        <pre><code>var element = document.getElementById('selector');
+var mask = new IMask(element, {
+  mask: '+{7}(000)000-00-00'
+});</code></pre>
 
-        <h2 id="options" class="section-h"><a href="#options">Options</a></h2>
-        <h3 id="options-init" class="section-h"><a href="#options-init">Initialize</a></h3>
-        <pre><code>var mask = new IMask(<em>selector</em>, <em>opts</em>)</code></pre>
-        <code>mask</code> option is mandatory and can be one of following types:
+        <h2 id="docs" class="section-h"><a href="#docs">Docs</a></h2>
+        <p>Mask lifecycle commonly consists of <a href="#docs-init">initialization</a>, <a href="#docs-events">subscribtion for events</a>, <a href="#docs-properties">accessing properties</a> and <a href="#docs-destroy">destruction</a>.</p>
+
+        <h3 id="docs-init" class="section-h"><a href="#docs-init">Initialize</a></h3>
+        <pre><code>var mask = new IMask(<em>element</em>, <em>opts</em>)</code></pre>
+        <p><code>opts</code> is an object in which single <code>mask</code> option is mandatory and can be one of following types:</p>
         <dl>
           <dt>RegExp</dt>
           <dd>matches input against mask RegExp</dd>
           <dt>Function</dt>
-          <dd>process input with mask <code>function (<em>input</em>, <em><a href="#options-details">details</a></em>) {...}</code></dd>
+          <dd>process input with mask <code>function (<em>input</em>, <em><a href="#docs-details">details</a></em>) {...}</code></dd>
           <dt>Child of <code>BaseMask</code></dt>
           <dd>custom mask resolver</dd>
           <dt>String (Pattern)</dt>
@@ -89,15 +91,16 @@ var mask = new IMask(selector, {
   char: &lt;any single char&gt;  // defaults to '_'
 }</code></pre>
           <pre><code>definitions: {
-  &lt;any single char&gt;: &lt;same type as mask (RegExp, Function, etc.)&gt;
+  &lt;any single char&gt;: &lt;same type as mask (RegExp, Function<span class="req">*</span>, etc.)&gt;
   ...
   // defaults are '0', 'a', '*'
 }</code></pre>
+          <p><span class="req">*</span>Function signature differs from base mask: <code>function (ch, ci, str)</code>.</p>
           </dd>
         </dl>
         Mask type used to build a resolver (or inherit BaseMask).
         Resolver should define at least one method <code>resolve (<em>input</em>, <em>details</em>) {...}</code>.
-        <p id="options-details">Details is an object:</p>
+        <p id="docs-details">Details is an object:</p>
         <pre><code>{
   cursorPos: &lt;current cursor position&gt;,
   startChangePos: &lt;index of the first changed character&gt;,
@@ -109,13 +112,14 @@ var mask = new IMask(selector, {
   insertedCount: &lt;inserted characters count&gt;,
   oldValue: &lt;previous user input&gt;
 }</code></pre>
+        <p>Finally mask automatically start listening for element events. For manual control use <code>bindEvents</code>/<code>unbindEvents</code> methods.</p>
 
-        <h3 id="options-callbacks" class="section-h"><a href="#options-callbacks">Callbacks</a></h3>
-        <p><code>accept</code>, <code>complete</code> callbacks are only available with <em>pattern</em> mask type or can be fired manually with <code>fireEvent (event)</code> method.</p>
+        <h3 id="docs-events" class="section-h"><a href="#docs-events">Events</a></h3>
+        <p>Subscription for <code>accept</code>, <code>complete</code> events are only available with <em>pattern</em> mask type or can be fired manually with <code>fireEvent (event)</code> method.</p>
         <p>Use <code>on (event, handler)</code> method for subscribe.</p>
         <p>Use <code>off (event [, handler])</code> for unsibscribe. Calling without handler argument removes all attached handlers.</p>
 
-        <h3 id="options-properties" class="section-h"><a href="#options-properties">Properties</a></h3>
+        <h3 id="docs-properties" class="section-h"><a href="#docs-properties">Properties</a></h3>
         <p>All mask options could be modified in run-time. Any modification applies mask with new options on input value.</p>
         <p>For all mask types following properties available</p>
         <ul class="unstyled">
@@ -123,16 +127,16 @@ var mask = new IMask(selector, {
           <li><code>unmaskedValue</code></li>
           <li><code>rawValue</code></li>
         </ul>
-        <p>For pattern mask in addition could be used
+        <p>For pattern mask in addition can be used
         <ul class="unstyled">
           <li><code>placeholder</code>
           <li><code>definitions</code></li>
           <li><code>placeholderLabel<sub>get</sub></code></li>
           <li><code>isComplete<sub>get</sub></code></li>
         </ul>
-        <p>Commonly mask automatically reapplies. When needed for manual mask refresh <code>refresh</code> method could be used. For bucket changes enclose them between <code>startRefrest</code>/<code>endRefresh</code> methods.</p>
+        <p>Commonly mask automatically reapplies. For manual mask refresh use <code>refresh</code> method. For bucket changes enclose them between <code>startRefrest</code>/<code>endRefresh</code> method calls.</p>
 
-        <h3 id="options-destroy" class="section-h"><a href="#options-destroy">Destroy</a></h3>
+        <h3 id="docs-destroy" class="section-h"><a href="#docs-destroy">Destroy</a></h3>
         <p>Call <code>destroy</code> method.</p>
 
         <h2 id="examples" class="section-h"><a href="#examples">Examples</a></h2>
@@ -203,6 +207,9 @@ var mask = new IMask(selector, {
             <button name="apply" type="button">Apply</button>
           </div>
         </form>
+
+        <h2 id="under-the-hood" class="section-h"><a href="#under-the-hood">Under The Hood</a></h2>
+        <p>Coming soon</p>
       </section>
       <footer>
         <p>Maintained by <a href="https://github.com/uNmAnNeR">uNmAnNeR</a></p>
