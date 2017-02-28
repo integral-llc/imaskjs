@@ -38,7 +38,7 @@
           <li>no external dependencies</li>
           <li>show placeholders in <em>always</em> and <em>lazy</em> modes</li>
           <li>unmasked value can contain fixed parts</li>
-          <li>optional input parts</li>
+          <li>optional input parts (greedy)</li>
           <li>IE11+ support <span class="req">*<a href="#under-the-hood">support older</a></span></li>
         </ul>
         <p>May coming soon:</p>
@@ -103,13 +103,10 @@ var mask = new IMask(element, {
         <p id="docs-details">Details is an object:</p>
         <pre><code>{
   cursorPos: &lt;current cursor position&gt;,
-  startChangePos: &lt;index of the first changed character&gt;,
   oldSelection: {
     start: &lt;index of the first previously selected character&gt;,
     end: &lt;index of the character after the last previously selected character&gt;
   },
-  removedCount: &lt;removed characters count&gt;,
-  insertedCount: &lt;inserted characters count&gt;,
   oldValue: &lt;previous user input&gt;
 }</code></pre>
         <p>Finally mask automatically start listening for element events. For manual control use <code>bindEvents</code>/<code>unbindEvents</code> methods.</p>
@@ -134,13 +131,37 @@ var mask = new IMask(element, {
           <li><code>placeholderLabel<sub>get</sub></code></li>
           <li><code>isComplete<sub>get</sub></code></li>
         </ul>
-        <p>Commonly mask automatically reapplies. For manual mask refresh use <code>refresh</code> method. For bucket changes enclose them between <code>startRefrest</code>/<code>endRefresh</code> method calls.</p>
+        <p>Commonly mask automatically reapplies. For manual mask refresh set <code>rawValue</code> or <code>unmaskedValue</code>.</p>
 
         <h3 id="docs-destroy" class="section-h"><a href="#docs-destroy">Destroy</a></h3>
         <p>Call <code>destroy</code> method.</p>
 
         <h2 id="examples" class="section-h"><a href="#examples">Examples</a></h2>
-        <p>TODO</p>
+        <h3 id="ex-phone" class="section-h"><a href="#ex-phone">Phone number</a></h3>
+        <pre><code>var phoneMask = new IMask(document.getElementById('phone-mask'), {
+  mask: '+{7}(000)000-00-00'
+}).on('accept', function() {/* ... */})
+.on('complete', function() {/* ... */});</code></pre>
+
+        <h3 id="ex-numbers" class="section-h"><a href="#ex-numbers">Only numbers</a></h3>
+        <pre><code>var numbersMask = new IMask(document.getElementById('numbers-mask'), {
+  mask: function (str, details) {
+    var cursorPos = details.cursorPos;
+    var oldSelection = details.oldSelection;
+    var startChangePos = Math.min(cursorPos, oldSelection.start);
+    var insertedCount = cursorPos - startChangePos;
+
+    if (!insertedCount) return true;
+
+    var head = str.substring(0, startChangePos);
+    var tail = str.substring(startChangePos + insertedCount);
+    var inserted = str.substr(startChangePos, insertedCount);
+    var insertedNumbers = inserted.replace(/\D/g,'');
+
+    details.cursorPos -= inserted.length - insertedNumbers.length;
+    return head + insertedNumbers + tail;
+  }
+});</code></pre>
 
         <h2 id="demo" class="section-h"><a href="#demo">Demo</a></h2>
         <h3 id="demo-phone" class="section-h"><a href="#demo-phone">Phone number</a></h3>
@@ -149,6 +170,14 @@ var mask = new IMask(element, {
             <label>Type here against mask <span class="desc">+{7}(000)000-00-00</span></label>
             <input id="phone-mask" type="text" value="">
             <div class="desc">unmasked: <span id="phone-unmasked"></span><span id="phone-complete" class="example__complete"></span></div>
+          </div>
+        </form>
+
+        <h3 id="demo-numbers" class="section-h"><a href="#demo-numbers">Only numbers</a></h3>
+        <form class="form example-numbers">
+          <div class="form-item">
+            <label>Type here</label>
+            <input id="numbers-mask" type="text" value="">
           </div>
         </form>
 
@@ -226,6 +255,24 @@ var mask = new IMask(element, {
         document.getElementById('phone-complete').style.display = 'inline-block';
       });
 
+      new IMask(document.getElementById('numbers-mask'), {
+        mask: function (str, details) {
+          var cursorPos = details.cursorPos;
+          var oldSelection = details.oldSelection;
+          var startChangePos = Math.min(cursorPos, oldSelection.start);
+          var insertedCount = cursorPos - startChangePos;
+
+          if (!insertedCount) return true;
+
+          var head = str.substring(0, startChangePos);
+          var tail = str.substring(startChangePos + insertedCount);
+          var inserted = str.substr(startChangePos, insertedCount);
+          var insertedNumbers = inserted.replace(/\D/g,'');
+
+          details.cursorPos -= inserted.length - insertedNumbers.length;
+          return head + insertedNumbers + tail;
+        }
+      });
 
       var customMask = new IMask(document.getElementById('custom-mask'), {
           mask: '000[aaa]XXX***',
